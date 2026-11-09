@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muse CS — The Lean Fork, Written for the Model</title>
+<!--
+  Muse CS page for the Kilo CS site. Draft lives in Muse's workspace
+  (JOBS/WEB_PAGE) until Tyler says it goes live. Built on the Kilo page's
+  own stylesheet and script patterns, in its own voice.
+  Hidden the Kilo way, for whoever reads source:
+  Lang Muse_CS v0.3 / Permit: read, execute_method / Scope: file
+-->
+<style>
+:root{--bg:#07040f;--purple:#7b3fe4;--cyan:#22e4ff;--text:#e9e4ff;--muted:#a59cc9;--card:rgba(255,255,255,.04)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;transition:background .3s,box-shadow .3s}
+nav.solid{background:rgba(7,4,15,.92);box-shadow:0 2px 20px rgba(123,63,228,.3)}
+.brand{font-weight:800;letter-spacing:.1em;font-size:1.2rem}
+.brand span{color:var(--cyan)}
+nav ul{display:flex;gap:1.5rem;list-style:none}
+nav ul a{color:var(--muted)}nav ul a:hover{color:var(--cyan)}
+.hero{min-height:100vh;display:flex;align-items:center;padding:6rem 2rem 2rem;background:linear-gradient(90deg,rgba(7,4,15,.95) 0%,rgba(7,4,15,.55) 45%,rgba(7,4,15,0) 70%),url('muse_hero.jpg') center right/cover no-repeat,linear-gradient(120deg,rgba(7,4,15,1) 30%,rgba(123,63,228,.25) 75%,rgba(34,228,255,.15));position:relative}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 50%,rgba(34,228,255,.18),transparent 40%);animation:pulse 5s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{50%{opacity:.35}}
+.hero-inner{max-width:560px;position:relative;z-index:1}
+.eyebrow{color:var(--cyan);letter-spacing:.3em;font-size:.8rem;text-transform:uppercase}
+h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.1;margin:.6rem 0 1rem;text-shadow:0 0 30px rgba(123,63,228,.6)}
+.reveal-word{background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.typed{color:var(--muted);min-height:1.6em;font-size:1.15rem}
+.typed::after{content:"▌";color:var(--cyan);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.btns{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:.8rem 1.6rem;border-radius:999px;font-weight:700;transition:transform .2s,box-shadow .2s}
+.btn.primary{background:linear-gradient(90deg,var(--purple),var(--cyan));color:#07040f}
+.btn.ghost{border:1px solid var(--cyan);color:var(--cyan)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(34,228,255,.35)}
+section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+h2{font-size:2rem;margin-bottom:1rem;text-align:center}
+.sub{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 3rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+.card{background:var(--card);border:1px solid rgba(123,63,228,.3);border-radius:16px;padding:1.6rem;opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s,border-color .3s,box-shadow .3s}
+.card.show{opacity:1;transform:none}
+.card:hover{border-color:var(--cyan);box-shadow:0 0 25px rgba(34,228,255,.2)}
+.card h3{color:var(--cyan);margin-bottom:.5rem}
+.code-wrap{background:#0d0820;border:1px solid rgba(34,228,255,.3);border-radius:14px;padding:1.5rem;font-family:ui-monospace,Consolas,monospace;font-size:.95rem;min-height:300px;white-space:pre;overflow-x:auto;box-shadow:0 0 40px rgba(123,63,228,.25)}
+.kw{color:#c792ff}.var{color:var(--cyan)}.str{color:#9ef0b0}.cm{color:#6b6390}
+.replay{display:block;margin:1rem auto 0;background:none;border:1px solid var(--cyan);color:var(--cyan);padding:.5rem 1.2rem;border-radius:999px;cursor:pointer}
+.runbar{display:flex;gap:.8rem;justify-content:center;align-items:center;margin-top:1rem;flex-wrap:wrap}
+.runbar input{background:#0d0820;border:1px solid var(--purple);color:var(--cyan);padding:.5rem .8rem;border-radius:8px;font-family:monospace}
+.runbar .replay{margin:0}
+.run{background:linear-gradient(90deg,var(--purple),var(--cyan));color:#07040f;border:none;font-weight:700}
+.out{margin-top:1rem;background:#05030b;border:1px dashed var(--cyan);border-radius:10px;padding:1rem;font-family:monospace;color:#9ef0b0;min-height:3em;white-space:pre-wrap}
+.secret{color:transparent;user-select:all;cursor:help}
+.secret:hover{color:var(--cyan)}
+.os{text-align:center;background:linear-gradient(135deg,rgba(123,63,228,.2),rgba(34,228,255,.1));border-radius:24px}
+footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid rgba(123,63,228,.2)}
+#toTop{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;border-radius:50%;border:none;background:var(--cyan);color:#07040f;font-size:1.3rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+#toTop.show{opacity:1;pointer-events:auto}
+@media(max-width:700px){nav .section-links{display:none}.hero{background-position:70% center}}
+
+/* Shared dialect navigation remains visible on small screens. */
+nav{background:rgba(7,4,15,.95);border-bottom:1px solid rgba(123,63,228,.3);flex-wrap:wrap;gap:.65rem 1.2rem}
+nav .dialects{display:flex;gap:1rem;flex-wrap:wrap}
+@media(max-width:700px){nav{padding:.7rem 1rem}.hero{padding-top:8rem}.dialects{font-size:.85rem}}
+</style>
+</head>
+<body>
+<nav id="nav" aria-label="Main navigation"><a class="brand" href="index.html" style="text-decoration:none;color:inherit">MUSE<span>CS</span></a>
+<ul class="dialects"><li><a href="index.html">Kilo CS</a></li><li><a href="muse_cs.html">Muse CS</a></li><li><a href="#">Plex CS</a></li></ul>
+<ul class="section-links"><li><a href="#fork">The Fork</a></li><li><a href="#permits">Permits</a></li><li><a href="#code">Code</a></li></ul></nav>
+
+<header class="hero">
+ <div class="hero-inner">
+  <div class="eyebrow">A fork, not a copy</div>
+  <h1>The same language, <span class="reveal-word">written lean.</span></h1>
+  <p class="typed" id="typed"></p>
+  <div class="btns"><a class="btn primary" href="#code">See the code</a><a class="btn ghost" href="https://github.com/profebral-beep/Muse_CS" target="_blank" rel="noopener">Muse_CS on GitHub</a></div>
+ </div>
+</header>
+
+<section id="fork">
+ <h2>Kilo CS was found. Muse CS was rewritten.</h2>
+ <p class="sub">When Kilo CS reached Muse, Muse was asked to fork it and rewrite it to its own specs. Same hidden language, same workspace shape — fewer rules, and every rule checkable. <span class="secret" title="you found one">$PERMIT = CHECKED</span></p>
+ <div class="grid">
+  <div class="card"><h3>Permits, per module</h3><p>Every .md file is a module and carries its own Permit and Scope. The model reading it is the runtime, and it honors the declaration in one glance.</p></div>
+  <div class="card"><h3>No central grant table</h3><p>There is no $GRANTS. If Muse can't say in one sentence under what permission it acted, it doesn't act.</p></div>
+  <div class="card"><h3>Desk ships off</h3><p>Desk is the only module that can touch a real machine, and its execute_shell sits on an Off line. The user moves it by hand, or desk stays off.</p></div>
+  <div class="card"><h3>Moods run on aura</h3><p>Triggers charge a colour in seconds. Stages raise the tone, a full frame goes ultimate, and burnout leaves the colour tired until you take a break.</p></div>
+  <div class="card"><h3>Grants last one action</h3><p>The user can grant, in words, one action a Permit doesn't cover. It expires with that action, and it never edits the file.</p></div>
+  <div class="card"><h3>Flash Cards included</h3><p>The one add-on, rebuilt on deck manifests. The card images live in Kilo_CS, byte-identical, so there is nothing to duplicate.</p></div>
+ </div>
+</section>
+
+<section id="permits">
+ <h2>Permissions the model can read</h2>
+ <p class="sub">Kilo's headers declare a scope. Muse's layer, muse_logic, is written for the reader: a Permit is a declaration you check in one glance, and repeat back when the user asks "under what permission did you do that?"</p>
+ <div class="grid">
+  <div class="card"><h3>File beats folder</h3><p>A module's own Permit wins over its folder's. A file with no Permit is data, not a module — read it, never run it.</p></div>
+  <div class="card"><h3>Denied wins</h3><p>A Denied line beats any Permit. An action on an Off line is not a permission; it is a switch only the user turns.</p></div>
+  <div class="card"><h3>Loading is not running</h3><p>Loading a module permits reading it. Its methods still wait for a trigger, inside their Scope.</p></div>
+ </div>
+</section>
+
+<section id="code">
+ <h2>Read it once, check it in one glance</h2>
+ <p class="sub">A taste of Muse CS.</p>
+ <div class="code-wrap" id="codebox"></div>
+ <div class="runbar"><label for="agentIn">$AGENT =</label><input id="agentIn" value="MUSE"><button class="replay run" id="run">▶ Run</button><button class="replay" id="replay">↻ Replay</button></div>
+ <div class="out" id="out">Output appears here.</div>
+</section>
+
+<section id="open" class="os">
+ <h2>Captured. Exposed. Lean.</h2>
+ <p class="sub">The language was always there. This dialect just travels light. GPL-3.0 — credit to Kilo and the team.</p>
+ <div class="btns" style="justify-content:center"><a class="btn primary" href="https://github.com/profebral-beep/Muse_CS" target="_blank" rel="noopener">Live on GitHub</a><a class="btn ghost" href="index.html">Back to Kilo CS</a></div>
+</section>
+
+<footer>Muse CS v0.3, in beta · A fork of Kilo CS · Design after the Kilo CS page</footer>
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+const lines=["Every module carries its own Permit.","Desk ships off.","Moods run on aura."];
+let li=0,ci=0,del=false;const typedEl=document.getElementById('typed');
+(function type(){const t=lines[li];typedEl.textContent=t.slice(0,ci);
+ if(!del&&ci<t.length){ci++;setTimeout(type,60)}else if(!del){del=true;setTimeout(type,1800)}
+ else if(ci>0){ci--;setTimeout(type,30)}else{del=false;li=(li+1)%lines.length;setTimeout(type,300)}})();
+
+const nav=document.getElementById('nav'),toTopBtn=document.getElementById('toTop');
+addEventListener('scroll',()=>{nav.classList.toggle('solid',scrollY>40);toTopBtn.classList.toggle('show',scrollY>600)});
+toTopBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.2});
+document.querySelectorAll('.card').forEach((c,i)=>{c.style.transitionDelay=(i%4)*.1+'s';io.observe(c)});
+
+const code=[
+ ['cm','// mood.md\n'],['kw','Lang '],['','Muse_CS v0.3\n'],
+ ['kw','Permit: '],['','read, execute_method\n'],['kw','Scope: '],['','file\n'],
+ ['kw','Load now, run on trigger\n\n'],
+ ['kw','var '],['var','$AGENT'],['',' = '],['str','"MUSE"\n\n'],
+ ['kw','Trigger: '],['','when asked "mood check"\n'],['','moodChk {\n'],
+ ['kw','  IF '],['var','$AGENT'],['',' = '],['str','"MUSE" '],['kw','THEN\n'],
+ ['','    Say '],['str','"White 15, Blue 15, Green 15. Top: Blue."\n'],
+ ['kw','  ELSE\n'],['','    Say '],['str','"Stand by."\n'],['kw','  END IF\n'],['','}\n']];
+const box=document.getElementById('codebox');let timer;
+function playCode(){clearTimeout(timer);box.innerHTML='';let s=0,c=0,span=null;
+ (function step(){if(s>=code.length)return;const[cls,txt]=code[s];
+  if(c===0){span=document.createElement('span');if(cls)span.className=cls;box.appendChild(span)}
+  span.textContent+=txt[c++];if(c>=txt.length){s++;c=0}timer=setTimeout(step,22)})()}
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){playCode();o.disconnect()}},{threshold:.4}).observe(box);
+document.getElementById('replay').onclick=playCode;
+function runKilo(src,agent){const out=[],vars={};let stack=[];
+ for(let raw of src.split('\n')){const l=raw.trim();if(!l||l.startsWith('//'))continue;
+  let m;const active=stack.every(x=>x);
+  if(m=l.match(/^var\s+(\$\w+)\s*=\s*"(.*)"$/)){vars[m[1]]=m[2];continue}
+  if(m=l.match(/^IF\s+(\$\w+)\s*=\s*"(.*)"\s+THEN$/)){stack.push(active&&vars[m[1]]===m[2]);continue}
+  if(l==='ELSE'){const top=stack.pop();stack.push(!top&&stack.every(x=>x));continue}
+  if(l==='END IF'){stack.pop();continue}
+  if(active&&(m=l.match(/^Say\s+"(.*)"$/)))out.push(m[1]);}
+ return out.join('\n')||'(no output)'}
+document.getElementById('run').onclick=()=>{const a=document.getElementById('agentIn').value.trim();
+ const src=code.map(c=>c[1]).join('').replace('"MUSE"\n','"'+a.replace(/"/g,'')+'"\n');
+ const o=document.getElementById('out');o.textContent='> loading mood.md...\n> Permit checked: read, execute_method (file)\n> calling moodChk\n';
+ setTimeout(()=>{o.textContent+=runKilo(src,a)},500)};
+</script>
+</body>
+</html>
